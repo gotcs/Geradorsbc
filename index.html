@@ -1439,9 +1439,36 @@
             display: flex;
             align-items: center;
         }
+
+        /* Acesso protegido à seção OBSERVAÇÕES - senha exibida dentro da área de conteúdo */
+        .observacoes-auth-gate {
+            min-height: 360px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 44px 20px;
+        }
+
+        .observacoes-auth-box {
+            width: min(440px, 100%);
+            padding: 22px;
+            background: var(--surface-raised);
+            color: var(--text);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            text-align: left;
+        }
+
+        .observacoes-auth-box h5 { margin: 0 0 6px; color: var(--primary-strong); font-weight: 800; }
+        .observacoes-auth-box p { margin-bottom: 14px; color: var(--text-muted); font-size: 0.9rem; }
+        .observacoes-auth-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+        .observacoes-auth-error { min-height: 20px; margin-top: 8px; color: var(--danger); font-size: 0.82rem; font-weight: 700; }
+        .observacoes-protected-content[hidden] { display: none !important; }
     </style>
 </head>
 <body>
+
 
 <div class="container container-main">
     <div class="text-center mb-4 app-header">
@@ -1801,6 +1828,19 @@
 
         <!-- Observações -->
         <div class="section-pane d-none" id="observacoes">
+            <div id="observacoesAuthGate" class="observacoes-auth-gate">
+                <div class="observacoes-auth-box">
+                    <h5>🔒 Acesso às Observações</h5>
+                    <p>Digite a senha para visualizar o conteúdo das Observações.</p>
+                    <label class="form-label fw-bold" for="observacoesSenha">Senha</label>
+                    <input type="password" id="observacoesSenha" class="form-control" autocomplete="off" placeholder="Digite a senha">
+                    <div id="observacoesAuthError" class="observacoes-auth-error" aria-live="polite"></div>
+                    <div class="observacoes-auth-actions">
+                        <button type="button" class="btn btn-primary" onclick="confirmObservacoesAuth()">Acessar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="observacoesProtectedContent" class="observacoes-protected-content" hidden>
             <div class="card shadow-sm border-warning">
                 <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">📋 Observações e Referências Técnicas do SBC</h5>
@@ -1956,6 +1996,7 @@
                         </ul>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -2492,13 +2533,56 @@ function handleTypeChange() {
         updateContent();
     }
 
+    function openObservacoesAuth() {
+        currentActiveSection = 'observacoes';
+        document.querySelectorAll('.section-pane').forEach(pane => pane.classList.add('d-none'));
+        const section = document.getElementById('observacoes');
+        const gate = document.getElementById('observacoesAuthGate');
+        const content = document.getElementById('observacoesProtectedContent');
+        const input = document.getElementById('observacoesSenha');
+        const error = document.getElementById('observacoesAuthError');
+        section.classList.remove('d-none');
+        content.hidden = true;
+        gate.style.display = 'flex';
+        input.value = '';
+        error.textContent = '';
+        renderNavButtons();
+        updateDestinoOptions();
+        setTimeout(() => input.focus(), 0);
+    }
+
+    function confirmObservacoesAuth() {
+        const input = document.getElementById('observacoesSenha');
+        const error = document.getElementById('observacoesAuthError');
+        if (input.value !== 'Wonit') {
+            error.textContent = 'Senha incorreta.';
+            input.select();
+            return;
+        }
+        error.textContent = '';
+        document.getElementById('observacoesAuthGate').style.display = 'none';
+        document.getElementById('observacoesProtectedContent').hidden = false;
+    }
+
     function showSection(id) {
+        if (id === 'observacoes') {
+            openObservacoesAuth();
+            return;
+        }
         currentActiveSection = id;
         document.querySelectorAll('.section-pane').forEach(pane => pane.classList.add('d-none'));
         document.getElementById(id).classList.remove('d-none');
         renderNavButtons();
         updateDestinoOptions();
     }
+
+    document.addEventListener('keydown', function(event) {
+        const input = document.getElementById('observacoesSenha');
+        const gate = document.getElementById('observacoesAuthGate');
+        if (event.key === 'Enter' && input && document.activeElement === input && gate && gate.style.display !== 'none') {
+            confirmObservacoesAuth();
+        }
+    });
 
     function toggleItemCheckbox(sectionKey, itemId) {
         const legado = document.getElementById('interligacaoLegado').value;
