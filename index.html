@@ -1465,6 +1465,104 @@
         .observacoes-auth-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
         .observacoes-auth-error { min-height: 20px; margin-top: 8px; color: var(--danger); font-size: 0.82rem; font-weight: 700; }
         .observacoes-protected-content[hidden] { display: none !important; }
+
+        /* Destaque das informações variáveis no script trk.lua */
+        .lua-variable {
+            color: #2563eb;
+            font-weight: 800;
+        }
+
+        body.theme-dark .lua-variable {
+            color: #60a5fa;
+        }
+
+        /* Destino/NAP do cliente no trk.lua - mesma família roxa usada nas rotas */
+        .lua-route-variable {
+            color: #9333ea;
+            font-weight: 800;
+        }
+
+        body.theme-dark .lua-route-variable {
+            color: #c084fc;
+        }
+
+        /* Comentários Lua: --CLIENTE e linhas preencher_tabela comentadas */
+        .lua-comment {
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        body.theme-dark .lua-comment {
+            color: #4ade80;
+        }
+
+        .lua-comment-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: -8px 0 12px 4px;
+            padding: 7px 11px;
+            color: var(--text-soft);
+            background: var(--surface-muted);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .lua-script-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: -8px 0 12px 4px;
+            flex-wrap: wrap;
+        }
+
+        .lua-script-actions .lua-comment-toggle {
+            margin: 0;
+        }
+
+        .lua-script-actions .lua-comment-toggle-right {
+            margin-left: auto;
+        }
+
+        .lua-client-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 35px;
+            padding: 7px 11px;
+            color: var(--primary-strong);
+            background: var(--surface-muted);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-sm);
+            font-size: 0.84rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+        }
+
+        .lua-client-copy-btn:hover {
+            color: #fff;
+            background: #2563eb;
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .lua-client-copy-btn.is-copied {
+            color: #fff;
+            background: #059669;
+            border-color: #059669;
+        }
+
+        .lua-comment-toggle input {
+            width: 17px;
+            height: 17px;
+            margin: 0;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -1762,29 +1860,45 @@
             
             <div id="script-interage">
                 <h5 class="section-title">Tabelas Locais (<span class="interage-style">Interage+</span>)</h5>
+                <div class="lua-script-actions">
+                    <button type="button" id="copyLuaClientBtn" class="lua-client-copy-btn" onclick="copyLuaClientLines()" title="Copiar script do cliente">
+                        <span aria-hidden="true">📋</span><span>Copiar Script</span>
+                    </button>
+                    <label class="lua-comment-toggle lua-comment-toggle-right" for="comentarPreencher">
+                        <input type="checkbox" id="comentarPreencher" onchange="updateContent()">
+                        <span>Comentar</span>
+                    </label>
+                </div>
                 <div class="code-block" id="lua-local"></div>
 
                 <h5 class="section-title">Tabelas LDN</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-ldn', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-ldn"></div>
 
                 <h5 class="section-title">Tabelas Cliente Local (Verificar se já existe uma tabela criada)</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-if', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-if"></div>
 
                 <h5 class="section-title">Tabela 0800</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-0800', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-0800"></div>
             </div>
 
             <div id="script-utech">
                 <h5 class="section-title">Tabelas Local - SBC.net</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-local-utech', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-local-utech"></div>
 
                 <h5 class="section-title">Tabelas LDN</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-ldn-utech', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-ldn-utech"></div>
 
                 <h5 class="section-title">Tabela Cliente Local</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-if-utech', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-if-utech"></div>
 
                 <h5 class="section-title">Tabela 0800</h5>
+                <div class="lua-script-actions"><button type="button" class="lua-client-copy-btn" onclick="copyLuaBlock('lua-0800-utech', this)"><span aria-hidden="true">📋</span><span>Copiar Script</span></button></div>
                 <div class="code-block" id="lua-0800-utech"></div>
             </div>
         </div>
@@ -2697,6 +2811,89 @@ function handleTypeChange() {
         return data[id];
     }
 
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function renderLuaWithVariables(text) {
+        // Mantém comentários inteiros com a cor de comentário.
+        // Nas linhas ativas, somente os valores variáveis ficam em azul.
+        return String(text).split('\n').map(line => {
+            const trimmed = line.trimStart();
+            if (trimmed.startsWith('--')) {
+                return `<span class="lua-comment">${escapeHtml(line)}</span>`;
+            }
+
+            let escaped = escapeHtml(line);
+            // NAP/destino (ex.: "S1-TRK-CLIENTE") em roxo.
+            escaped = escaped.replace(/(&quot;(?:S1|UT|LGD)-[^&]*?&quot;)/g, '<span class="lua-route-variable">$1</span>');
+            // DDD, início, fim e nomes das tabelas permanecem em azul.
+            escaped = escaped.replace(/(\btabela_local_[A-Za-z0-9_]+\b|\btabela_ldn\b|\b\d+\b)/g, '<span class="lua-variable">$1</span>');
+            return escaped;
+        }).join('\n');
+    }
+
+    async function copyLuaBlock(blockId, button) {
+        const source = document.getElementById(blockId);
+        if (!source || !button) return;
+        const text = source.textContent.trim();
+        if (!text) return;
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+            } else {
+                const area = document.createElement('textarea');
+                area.value = text; area.style.position = 'fixed'; area.style.opacity = '0';
+                document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
+            }
+            const old = button.innerHTML;
+            button.classList.add('is-copied');
+            button.innerHTML = '<span aria-hidden="true">✓</span><span>Copiado</span>';
+            setTimeout(() => { button.classList.remove('is-copied'); button.innerHTML = old; }, 1400);
+        } catch (e) { console.error('Erro ao copiar script:', e); }
+    }
+
+    async function copyLuaClientLines() {
+        const nome = (document.getElementById('nomeCliente').value || 'CLIENTE').toUpperCase();
+        const source = document.getElementById('lua-local');
+        const button = document.getElementById('copyLuaClientBtn');
+        if (!source || !button) return;
+
+        const clientComment = `--${nome}`;
+        const lines = source.textContent.split('\n').filter(line => {
+            const trimmed = line.trim();
+            return trimmed === clientComment || /^--?preencher_tabela\(/.test(trimmed) || /^preencher_tabela\(/.test(trimmed);
+        });
+        const text = lines.join('\n');
+        if (!text) return;
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+            } else {
+                const area = document.createElement('textarea');
+                area.value = text;
+                area.style.position = 'fixed';
+                area.style.opacity = '0';
+                document.body.appendChild(area);
+                area.select();
+                document.execCommand('copy');
+                area.remove();
+            }
+            const old = button.innerHTML;
+            button.classList.add('is-copied');
+            button.innerHTML = '<span aria-hidden="true">✓</span><span>Copiado</span>';
+            setTimeout(() => { button.classList.remove('is-copied'); button.innerHTML = old; }, 1400);
+        } catch (e) {
+            console.error('Erro ao copiar linhas do cliente:', e);
+        }
+    }
+
     function updateContent() {
         const nome = document.getElementById('nomeCliente').value.toUpperCase() || 'CLIENTE';
         const url = document.getElementById('urlCliente').value || document.getElementById('urlCliente').placeholder;
@@ -2708,6 +2905,8 @@ function handleTypeChange() {
         const opName = 'OP-' + op;
         const numero0800 = document.getElementById('numero0800') ? document.getElementById('numero0800').value.trim() : '';
         const destino0800 = document.getElementById('destino0800') ? document.getElementById('destino0800').value : '';
+        const comentarPreencher = document.getElementById('comentarPreencher')?.checked || false;
+        const preencherPrefix = comentarPreencher ? '--' : '';
 
         const scriptInterage = document.getElementById('script-interage');
         const scriptUtech = document.getElementById('script-utech');
@@ -2892,9 +3091,9 @@ function handleTypeChange() {
 `;
 
             ddrsByDdd[dddKey].forEach(d => {
-                luaLocalStr += `preencher_tabela(${tableName}, ${d.start}, ${d.end}, "${d.destino}")
+                luaLocalStr += `${preencherPrefix}preencher_tabela(${tableName}, ${d.start}, ${d.end}, "${d.destino}")
 `;
-                luaLdnStr += `preencher_tabela(tabela_ldn, ${dddKey}${d.start}, ${dddKey}${d.end}, "${d.destino}")
+                luaLdnStr += `${preencherPrefix}preencher_tabela(tabela_ldn, ${dddKey}${d.start}, ${dddKey}${d.end}, "${d.destino}")
 `;
             });
 
@@ -2906,9 +3105,9 @@ end
 `;
         });
 
-        document.getElementById('lua-local').innerText = luaLocalStr;
-        document.getElementById('lua-ldn').innerText = luaLdnStr;
-        document.getElementById('lua-if').innerText = luaIfStr.trimEnd();
+        document.getElementById('lua-local').innerHTML = renderLuaWithVariables(luaLocalStr);
+        document.getElementById('lua-ldn').innerHTML = renderLuaWithVariables(luaLdnStr);
+        document.getElementById('lua-if').innerHTML = renderLuaWithVariables(luaIfStr.trimEnd());
         document.getElementById('lua-local-utech').innerText = luaLocalStr;
         document.getElementById('lua-ldn-utech').innerText = luaLdnStr;
         document.getElementById('lua-if-utech').innerText = luaIfStr.trimEnd();
@@ -2919,7 +3118,7 @@ end
         const lua0800InterageStr = `nr0800 = {}\n--${nome}\nnr0800["${numero0800Final}"] = "${trunk0800Destino}"`;
         const lua0800UtechStr = `tronco0800 = {}\n--${nome}\ntronco0800["${numero0800Final}"] = "${trunk0800Destino}"`;
 
-        document.getElementById('lua-0800').innerText = lua0800InterageStr;
+        document.getElementById('lua-0800').innerHTML = renderLuaWithVariables(lua0800InterageStr);
         document.getElementById('lua-0800-utech').innerText = lua0800UtechStr;
 
         if (document.querySelectorAll('.info-pass').length > 0 && document.querySelector('.info-pass').innerText === '-') generateNewPassword();
