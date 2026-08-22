@@ -771,10 +771,17 @@
 
         .table .dialing-header th,
         .dialing-header th {
-            color: #3b2f00 !important;
-            background: linear-gradient(135deg, #fbbf24, #facc15) !important;
-            border-color: #d97706 !important;
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #047857, #059669 55%, #10b981) !important;
+            border-color: #047857 !important;
             font-weight: 800;
+        }
+
+        body.theme-dark .table .dialing-header th,
+        body.theme-dark .dialing-header th {
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #052e24, #047857 55%, #059669) !important;
+            border-color: #34d399 !important;
         }
 
         .list-group-item {
@@ -1466,6 +1473,595 @@
         .observacoes-auth-error { min-height: 20px; margin-top: 8px; color: var(--danger); font-size: 0.82rem; font-weight: 700; }
         .observacoes-protected-content[hidden] { display: none !important; }
 
+
+        /* Destaque da observação no cabeçalho Usuário Disca */
+        .sem-zero-note {
+            color: #2563eb;
+            font-weight: 900;
+        }
+
+        body.theme-dark .sem-zero-note {
+            color: #60a5fa;
+        }
+
+        /* Padrão de Discagem - mesmo visual dos campos de Regras de Discagem */
+        .dialing-main-card {
+            padding: 14px;
+            background: var(--surface-raised);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dialing-main-table {
+            width: 100%;
+            min-width: 1100px;
+            margin: 0;
+            table-layout: fixed;
+            border-collapse: separate !important;
+            border-spacing: 0 8px !important;
+            background: transparent !important;
+        }
+
+
+        /* Larguras fixas do Padrão de Discagem.
+           Mantém Tipo de Chamada, Padrão e Usuário Disca no mesmo tamanho
+           com Regras de Discagem ativada ou desativada. */
+        .dialing-main-table .dialing-col-call-type { width: 20%; }
+        .dialing-main-table .dialing-col-pattern { width: 18%; }
+        .dialing-main-table .dialing-col-user { width: 17%; }
+        .dialing-main-table .dialing-col-delivery { width: 45%; }
+
+        .dialing-main-table thead th {
+            padding: 0 7px 4px !important;
+            color: var(--text-muted) !important;
+            background: transparent !important;
+            border: 0 !important;
+            font-size: 0.70rem;
+            font-weight: 850;
+            letter-spacing: .035em;
+            text-transform: uppercase;
+            vertical-align: bottom;
+        }
+
+        .dialing-main-table tbody td {
+            height: 40px;
+            padding: 0 3px !important;
+            color: var(--text) !important;
+            background: transparent !important;
+            border: 0 !important;
+            vertical-align: middle;
+        }
+
+        .dialing-value-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 40px;
+            padding: 8px 10px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.86rem;
+            font-weight: 700;
+            line-height: 1.25;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
+        .dialing-value-box.call-type {
+            font-family: var(--font-ui);
+            font-weight: 750;
+        }
+
+        .dialing-main-table tbody tr:hover .dialing-value-box {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        body.theme-dark .dialing-value-box {
+            background: #0a1322;
+            border-color: var(--border-strong);
+            color: #f1f5f9;
+        }
+
+        @media (max-width: 900px) {
+            .dialing-main-card { overflow-x: auto; }
+            .dialing-main-table { min-width: 860px; }
+        }
+
+        /* Regras de Discagem exibidas no lugar de Entrega Operadora
+           com o mesmo visual usado no painel/modal lateral. */
+        .dialing-rules-inline-cell {
+            padding: 0 !important;
+            vertical-align: top !important;
+            background: var(--surface-raised) !important;
+        }
+
+        .dialing-rules-inline-panel {
+            width: 100%;
+            min-width: 430px;
+            padding: 0 3px;
+            background: var(--surface-raised);
+            color: var(--text);
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .dialing-rules-inline-panel .dialing-rules-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .dialing-rules-inline-panel .dialing-rules-table th {
+            height: 22px;
+            padding: 0 7px 4px;
+            color: var(--text-muted);
+            background: transparent !important;
+            border: 0 !important;
+            font-size: 0.70rem;
+            font-weight: 850;
+            letter-spacing: .035em;
+            text-transform: uppercase;
+        }
+
+        .dialing-rules-inline-panel .dialing-rules-table td {
+            height: 40px;
+            padding: 0 3px;
+            background: transparent !important;
+            border: 0 !important;
+        }
+
+        .dialing-rules-inline-panel .dialing-rules-table .rule-small {
+            width: 86px;
+        }
+
+        .dialing-rules-inline-panel .rule-input {
+            width: 100%;
+            min-width: 0;
+            min-height: 40px;
+            padding: 8px 9px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.82rem;
+            font-weight: 750;
+            outline: none;
+            box-shadow: none;
+            transition: border-color .18s ease, box-shadow .18s ease;
+        }
+
+        .dialing-rules-inline-panel .rule-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        body.theme-dark .dialing-rules-inline-panel {
+            background: var(--surface-raised);
+        }
+
+        /* Regras de Discagem integradas à grade principal: cada regra ocupa
+           exatamente uma linha da tabela para manter o alinhamento horizontal. */
+        .dialing-rule-row-cell {
+            padding: 0 3px !important;
+            vertical-align: middle !important;
+        }
+
+        .dialing-rule-row-grid {
+            display: grid;
+            grid-template-columns: 72px 72px minmax(150px, 1fr);
+            gap: 6px;
+            width: 100%;
+            min-height: 40px;
+        }
+
+        .dialing-rule-row-grid .rule-input {
+            width: 100%;
+            min-width: 0;
+            height: 40px;
+            padding: 8px 9px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.82rem;
+            font-weight: 750;
+            outline: none;
+        }
+
+        .dialing-rule-row-grid .rule-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        .dialing-empty-cell {
+            height: 40px;
+            padding: 0 3px !important;
+            background: transparent !important;
+            border: 0 !important;
+        }
+
+        body.theme-dark .dialing-rule-row-grid .rule-input {
+            background: #0a1322;
+            color: #f1f5f9;
+            border-color: var(--border-strong);
+        }
+
+        /* Regras de Discagem - painel fixo na lateral direita */
+        .dialing-rules-header-wrap {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas:
+                "heading toggle";
+            align-items: center;
+            width: 100%;
+            min-width: 0;
+            gap: 10px;
+        }
+
+        /* Checkbox sempre no lado direito do cabeçalho. */
+        .dialing-rules-header-top {
+            grid-area: toggle;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: auto;
+            min-width: max-content;
+            min-height: 28px;
+        }
+
+        .dialing-delivery-heading {
+            grid-area: heading;
+            display: block;
+            width: 100%;
+            min-width: 0;
+            text-align: left;
+        }
+
+        /* Quando Regras de Discagem estiver ativo, os títulos usam exatamente
+           as mesmas colunas dos campos Incluir / Remover / Padrão de Destino. */
+        .dialing-rule-column-headings {
+            display: grid;
+            grid-template-columns: 72px 72px minmax(150px, 1fr);
+            gap: 6px;
+            width: 100%;
+            align-items: end;
+        }
+
+        .dialing-rule-column-headings > span {
+            display: block;
+            min-width: 0;
+            padding: 0 9px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .dialing-main-table thead th:nth-child(4) {
+            padding-left: 3px !important;
+            padding-right: 3px !important;
+        }
+
+        .dialing-rules-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            padding: 4px 8px;
+            color: inherit;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            border-radius: 7px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .dialing-rules-toggle input {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            accent-color: #2563eb;
+            cursor: pointer;
+        }
+
+        .dialing-rules-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            justify-content: flex-end;
+            align-items: stretch;
+            padding: 0;
+            background: rgba(2, 6, 23, 0.22);
+            backdrop-filter: blur(1px);
+        }
+
+        .dialing-rules-modal-backdrop.show {
+            display: flex;
+        }
+
+        .dialing-rules-modal {
+            width: min(470px, 96vw);
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+            background: var(--surface-raised);
+            color: var(--text);
+            border: 0;
+            border-left: 1px solid var(--border-strong);
+            border-radius: 0;
+            box-shadow: -18px 0 42px rgba(2, 6, 23, 0.22);
+            animation: dialingRulesSlideIn .22s ease-out;
+        }
+
+        @keyframes dialingRulesSlideIn {
+            from { transform: translateX(100%); opacity: .82; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .dialing-rules-modal-header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            min-height: 62px;
+            padding: 14px 18px;
+            background: var(--surface-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dialing-rules-modal-title {
+            margin: 0;
+            color: var(--primary-strong);
+            font-size: 1rem;
+            font-weight: 850;
+        }
+
+        .dialing-rules-modal-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            color: var(--text-soft);
+            background: var(--surface-raised);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            line-height: 1;
+            transition: .18s ease;
+        }
+
+        .dialing-rules-modal-close:hover {
+            color: #fff;
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .dialing-rules-modal-body {
+            height: calc(100vh - 62px);
+            overflow: auto;
+            padding: 16px 14px 24px;
+        }
+
+        .dialing-rules-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .dialing-rules-table th {
+            padding: 0 7px 4px;
+            color: var(--text-muted);
+            font-size: 0.70rem;
+            font-weight: 850;
+            letter-spacing: .035em;
+            text-transform: uppercase;
+        }
+
+        .dialing-rules-table td {
+            padding: 0 3px;
+        }
+
+        .dialing-rules-table .rule-small {
+            width: 86px;
+        }
+
+        .dialing-rules-table .rule-input {
+            width: 100%;
+            min-height: 40px;
+            padding: 8px 9px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.82rem;
+            font-weight: 750;
+            outline: none;
+            transition: border-color .18s ease, box-shadow .18s ease;
+        }
+
+        .dialing-rules-table .rule-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        body.theme-dark .dialing-rules-modal {
+            box-shadow: -20px 0 54px rgba(0, 0, 0, .55);
+        }
+
+        @media (max-width: 640px) {
+            .dialing-rules-modal { width: min(430px, 100vw); }
+            .dialing-rules-table { min-width: 390px; }
+        }
+
+        /* CONFIGURAÇÃO SCRIPT - layout reformulado */
+        #script {
+            --lua-panel-bg: color-mix(in srgb, var(--surface-muted) 72%, var(--surface-raised));
+            --lua-border: var(--border);
+        }
+
+        #script > .alert-warning {
+            margin: 4px 0 22px;
+            padding: 12px 15px;
+            border-left: 4px solid var(--warning);
+            font-size: .88rem;
+        }
+
+        #script-interage,
+        #script-utech {
+            display: grid;
+            gap: 0;
+        }
+
+        #script .section-title {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            margin: 22px 0 0;
+            padding: 11px 14px 11px 16px;
+            color: var(--text);
+            background: linear-gradient(90deg, var(--surface-muted), var(--surface-raised));
+            border: 1px solid var(--lua-border);
+            border-bottom: 0;
+            border-left: 4px solid var(--primary);
+            border-radius: 11px 11px 0 0;
+            box-shadow: none;
+            font-size: .94rem;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        #script .section-title::before {
+            content: "</>";
+            display: inline-flex;
+            width: 28px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2px;
+            color: var(--primary-strong);
+            background: var(--primary-soft);
+            border-radius: 6px;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: .66rem;
+            font-weight: 900;
+            transform: none;
+        }
+
+        #script .section-title:hover::before {
+            transform: none;
+        }
+
+        #script .lua-script-actions {
+            min-height: 48px;
+            margin: 0;
+            padding: 7px 10px;
+            background: var(--lua-panel-bg);
+            border-right: 1px solid var(--lua-border);
+            border-left: 1px solid var(--lua-border);
+        }
+
+        #script .lua-client-copy-btn,
+        #script .lua-comment-toggle {
+            min-height: 32px;
+            margin: 0;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: .78rem;
+            line-height: 1;
+        }
+
+        #script .lua-client-copy-btn {
+            color: var(--primary-strong);
+            background: var(--surface-raised);
+            border: 1px solid var(--primary);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, .06);
+        }
+
+        #script .lua-client-copy-btn:hover {
+            color: #fff;
+            background: #2563eb;
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        #script .lua-comment-toggle {
+            color: var(--text-soft);
+            background: var(--surface-raised);
+            border: 1px solid var(--border-strong);
+        }
+
+        #script .lua-comment-toggle input {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            accent-color: var(--primary);
+        }
+
+        #script .code-block {
+            position: relative;
+            margin: 0 0 8px;
+            padding: 17px 18px;
+            min-height: 72px;
+            background: #f8fafc;
+            color: #1e293b;
+            border: 1px solid var(--lua-border);
+            border-top: 0;
+            border-radius: 0 0 11px 11px;
+            box-shadow: 0 7px 16px rgba(15, 23, 42, .06);
+            font-size: .86rem;
+            line-height: 1.72;
+        }
+
+        body.theme-dark #script .section-title {
+            background: linear-gradient(90deg, #16243a, #101b2e);
+            border-color: #334861;
+        }
+
+        body.theme-dark #script .lua-script-actions {
+            background: #101b2e;
+            border-color: #334861;
+        }
+
+        body.theme-dark #script .lua-client-copy-btn,
+        body.theme-dark #script .lua-comment-toggle {
+            background: #0b1525;
+        }
+
+        body.theme-dark #script .code-block {
+            background: #08111f;
+            color: #e2e8f0;
+            border-color: #334861;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .24);
+        }
+
+        @media (max-width: 640px) {
+            #script .lua-script-actions {
+                gap: 7px;
+            }
+            #script .lua-comment-toggle-right {
+                margin-left: 0;
+            }
+        }
+
         /* Destaque das informações variáveis no script trk.lua */
         .lua-variable {
             color: #2563eb;
@@ -1563,6 +2159,114 @@
             accent-color: var(--primary);
             cursor: pointer;
         }
+
+        /* LCR Padrão: usa a mesma identidade visual padrão das seções Criar NAP. */
+        #discagem .dialing-section-header {
+            color: var(--text) !important;
+            background: linear-gradient(90deg, var(--surface-muted), transparent) !important;
+            border: 1px solid var(--border) !important;
+            border-left: 0 !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+        #discagem .dialing-section-header::before {
+            color: var(--primary) !important;
+        }
+        #discagem .dialing-section-header #discagem-op-title {
+            color: var(--primary-strong) !important;
+        }
+        body.theme-dark #discagem .dialing-section-header {
+            color: #f8fafc !important;
+            background: linear-gradient(90deg, rgba(30, 64, 175, 0.26), rgba(23, 36, 58, 0.52), transparent) !important;
+            border-color: var(--border) !important;
+            border-left: 0 !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+        body.theme-dark #discagem .dialing-section-header::before {
+            color: var(--primary) !important;
+        }
+        body.theme-dark #discagem .dialing-section-header #discagem-op-title {
+            color: #93c5fd !important;
+        }
+    
+
+        /* V3.2 - Cabeçalho do Padrão de Discagem como uma única faixa contínua */
+        .dialing-main-table thead.dialing-header tr {
+            background: linear-gradient(135deg, #047857, #059669 55%, #10b981) !important;
+        }
+
+        .dialing-main-table thead.dialing-header th {
+            color: #ffffff !important;
+            background: transparent !important;
+            border-top: 1px solid #047857 !important;
+            border-bottom: 1px solid #047857 !important;
+            border-left: 0 !important;
+            border-right: 0 !important;
+            padding: 11px 12px !important;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            vertical-align: middle;
+        }
+
+        .dialing-main-table thead.dialing-header th:first-child {
+            border-left: 1px solid #047857 !important;
+            border-radius: 9px 0 0 9px;
+        }
+
+        .dialing-main-table thead.dialing-header th:last-child {
+            border-right: 1px solid #047857 !important;
+            border-radius: 0 9px 9px 0;
+        }
+
+        body.theme-dark .dialing-main-table thead.dialing-header tr {
+            background: linear-gradient(135deg, #052e24, #047857 55%, #059669) !important;
+        }
+
+        body.theme-dark .dialing-main-table thead.dialing-header th {
+            color: #ffffff !important;
+            background: transparent !important;
+            border-top-color: #34d399 !important;
+            border-bottom-color: #34d399 !important;
+        }
+
+        /* Regras de Discagem com aparência do botão CONFIGURAÇÃO SCRIPT */
+        .dialing-rules-toggle {
+            min-height: 31px;
+            padding: 5px 10px;
+            color: #212529 !important;
+            background: #f8f9fa !important;
+            border: 1px solid #f8f9fa !important;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, .08);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+        }
+
+        .dialing-rules-toggle:hover {
+            background: #e9ecef !important;
+            border-color: #e9ecef !important;
+            transform: translateY(-1px);
+        }
+
+        .dialing-rules-toggle input {
+            accent-color: #2563eb;
+        }
+
+        body.theme-dark .dialing-rules-toggle {
+            color: #172033 !important;
+            background: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        .dialing-delivery-heading,
+        .dialing-rule-column-headings > span {
+            color: #ffffff !important;
+            font-weight: 800;
+        }
+
     </style>
 </head>
 <body>
@@ -1910,7 +2614,7 @@
             </div>
 
             <div class="d-flex flex-column flex-md-row align-items-md-end gap-3 mt-3">
-                <h5 class="section-title flex-grow-1 mb-0">LCR Padrão para as Centrais Cloud - <span id="discagem-op-title" class="text-primary">ALGAR</span></h5>
+                <h5 class="section-title dialing-section-header flex-grow-1 mb-0">LCR Padrão para as Centrais Cloud - <span id="discagem-op-title" class="text-primary">ALGAR</span></h5>
                 <div style="min-width: 240px;">
                     <label class="form-label fw-bold mb-1" for="operadora">Operadora</label>
                     <select id="operadora" class="form-select" onchange="updateContent()">
@@ -1923,20 +2627,68 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm mt-3">
-                <table class="table table-striped table-bordered mb-0">
+            <div class="dialing-main-card mt-3">
+                <table class="dialing-main-table">
+                    <colgroup>
+                        <col class="dialing-col-call-type">
+                        <col class="dialing-col-pattern">
+                        <col class="dialing-col-user">
+                        <col class="dialing-col-delivery">
+                    </colgroup>
                     <thead class="dialing-header">
                         <tr>
                             <th>Tipo de Chamada</th>
                             <th>Padrão</th>
-                            <th>Usuário Disca</th>
-                            <th>Entrega Operadora</th>
+                            <th>Usuário Disca <span class="sem-zero-note">(Sem 0)</span></th>
+                            <th>
+                                <span class="dialing-rules-header-wrap">
+                                    <span class="dialing-rules-header-top">
+                                        <label class="dialing-rules-toggle" title="Ativar Regras de Discagem">
+                                            <input type="checkbox" id="dialingRulesToggle" onchange="handleDialingRulesToggle(this)">
+                                            <span>Regras de Discagem</span>
+                                        </label>
+                                    </span>
+                                    <span id="deliveryHeaderLabel" class="dialing-delivery-heading">Entrega Operadora</span>
+                                </span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="discagem-table-body">
                         <!-- Conteúdo injetado via JS -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+
+
+        <!-- Modal Regras de Discagem -->
+        <div id="dialingRulesModalBackdrop" class="dialing-rules-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="dialingRulesModalTitle" onclick="handleDialingRulesBackdropClick(event)">
+            <div class="dialing-rules-modal">
+                <div class="dialing-rules-modal-header">
+                    <h5 id="dialingRulesModalTitle" class="dialing-rules-modal-title">Regras de Discagem</h5>
+                    <button type="button" class="dialing-rules-modal-close" onclick="closeDialingRulesModal()" aria-label="Fechar">✕</button>
+                </div>
+                <div class="dialing-rules-modal-body">
+                    <table class="dialing-rules-table" aria-label="Regras de Discagem">
+                        <thead>
+                            <tr>
+                                <th class="rule-small">Incluir</th>
+                                <th class="rule-small">Remover</th>
+                                <th>Padrão de Destino</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><input class="rule-input" value=""></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="0[3589]00XX."></td></tr>
+                            <tr><td><input class="rule-input" value=""></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="1XX"></td></tr>
+                            <tr><td><input class="rule-input" value=""></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="1XXX"></td></tr>
+                            <tr><td><input class="rule-input" value=""></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="1XXXX"></td></tr>
+                            <tr><td><input class="rule-input" value="47"></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="[2-5]XXXXXXX"></td></tr>
+                            <tr><td><input class="rule-input" value="47"></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="[9]XXXXXXXX"></td></tr>
+                            <tr><td><input class="rule-input" value=""></td><td><input class="rule-input" value=""></td><td><input class="rule-input" value="ZZ[2-5]XXXXXXX"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -2148,8 +2900,9 @@
             ["Fixo LDN", "55+DDD+Numero", "554733216868"],
             ["Celular Local", "55+DDD+Numero", "5547999696868"],
             ["Celular VC2/VC3", "55+DDD+Numero", "5547999696868"],
-            ["Serviço 0300, 0500, 0800, 0900", "55+DDD+Numero", "5508006440800"],
-            ["Serviços de 3 e 5 Digitos", "Numero", "190"],
+            ["Serviço 0300, 0500, 0800, 0900", "55+Numero", "5508006440800"],
+            ["Serviços de 3 Digitos", "Numero", "190"],
+            ["Serviços de 5 Digitos", "Numero", "10321"],
             ["Internacional", "00+Pais+Numero", "005508006440800"]
         ],
         "INTERIP": [
@@ -2158,7 +2911,8 @@
             ["Celular Local", "DDD+Numero", "47999696868"],
             ["Celular VC2/VC3", "DDD+Numero", "47999696868"],
             ["Serviço 0300, 0500, 0800, 0900", "Numero", "08006440800"],
-            ["Serviços de 3 e 5 Digitos", "Numero", "190"],
+            ["Serviços de 3 Digitos", "Numero", "190"],
+            ["Serviços de 5 Digitos", "Numero", "10321"],
             ["Internacional", "00+Pais+Numero", "00554733216868"]
         ],
         "SATI": [
@@ -2167,7 +2921,9 @@
             ["Celular Local", "Numero", "999696868"],
             ["Celular VC2/VC3", "0+DDD+Numero", "047999696868"],
             ["Serviço 0300, 0500, 0800, 0900", "Numero", "08006440800"],
-            ["Serviços de 3 e 5 Digitos", "Numero", "190"]
+            ["Serviços de 3 Digitos", "Numero", "190"],
+            ["Serviços de 5 Digitos", "Numero", "10321"],
+            ["Internacional", "00+Pais+Numero", "00554733216868"]
         ],
         "ALGAR": [
             ["Fixo Local", "Numero", "33216868"],
@@ -2175,7 +2931,8 @@
             ["Celular Local", "Numero", "999696868"],
             ["Celular VC2/VC3", "012+DDD+Numero", "01247999696868"],
             ["Serviço 0300, 0500, 0800, 0900", "Numero", "08006440800"],
-            ["Serviços de 3 e 5 Digitos", "Numero", "190"],
+            ["Serviços de 3 Digitos", "Numero", "190"],
+            ["Serviços de 5 Digitos", "Numero", "10321"],
             ["Internacional", "0012+Pais+Numero", "0012554733216868"]
         ],
         "UNIFIQUE": [
@@ -2184,7 +2941,9 @@
             ["Celular Local", "Numero", "999696868"],
             ["Celular VC2/VC3", "0+DDD+Numero", "047999696868"],
             ["Serviço 0300, 0500, 0800, 0900", "Numero", "08006440800"],
-            ["Serviços de 3 e 5 Digitos", "Numero", "190"]
+            ["Serviços de 3 Digitos", "Numero", "190"],
+            ["Serviços de 5 Digitos", "Numero", "10321"],
+            ["Internacional", "00+Pais+Numero", "00554733216868"]
         ]
     };
 
@@ -2954,12 +3713,96 @@ function handleTypeChange() {
             "Celular VC2/VC3": "47999696868"
         };
         let discagemHtml = "";
-        patternData.forEach(p => {
-            const usuarioDisca = (op === "ALGAR" && p[0] === "Internacional")
-                ? "00554733216868"
-                : (userDialExamples[p[0]] || p[2]);
-            discagemHtml += `<tr><td>${p[0]}</td><td>${p[1]}</td><td>${usuarioDisca}</td><td>${p[2]}</td></tr>`;
+        const dialingRulesToggle = document.getElementById('dialingRulesToggle');
+        const showDialingRules = Boolean(dialingRulesToggle && dialingRulesToggle.checked);
+        const deliveryHeaderLabel = document.getElementById('deliveryHeaderLabel');
+        if (deliveryHeaderLabel) {
+            deliveryHeaderLabel.innerHTML = showDialingRules
+                ? '<span class="dialing-rule-column-headings"><span>Incluir</span><span>Remover</span><span>Padrão de Destino</span></span>'
+                : 'Entrega Operadora';
+        }
+
+        // Regras de Discagem alinhadas linha a linha com a coluna "Usuário Disca".
+        // A regra exibida acompanha o tipo de chamada da mesma linha.
+        const dialingRuleByCallType = {
+            "Fixo Local": ["", "", "[2-5]XXXXXXX"],
+            "Fixo LDN": ["012", "", "ZZ[2-5]XXXXXXX"],
+            "Celular Local": ["", "", "[9]XXXXXXXX"],
+            "Celular VC2/VC3": ["", "", "ZZ[9]XXXXXXXX"],
+            "Serviço 0300, 0500, 0800, 0900": ["", "", "0[3589]00XX."],
+            "Serviços de 3 Digitos": ["", "", "1XX"],
+            "Serviços de 5 Digitos": ["", "", "1XXXX"],
+            "Internacional": ["", "", "00XXX."]
+        };
+
+        const dialingRulesData = patternData.map((p) => {
+            if (!p) return ["", "", ""];
+            const baseRule = [...(dialingRuleByCallType[p[0]] || ["", "", ""])];
+
+            // O campo "Incluir" acompanha o prefixo exigido pela Entrega Operadora.
+            // Nas linhas com ZZ, o prefixo varia conforme a operadora.
+            if (p[0] === "Fixo LDN" || p[0] === "Celular VC2/VC3") {
+                const prefixosPorOperadora = {
+                    "ALGAR": "012",
+                    "UNION": "55",
+                    "INTERIP": "",
+                    "SATI": "0",
+                    "UNIFIQUE": "0"
+                };
+                baseRule[0] = prefixosPorOperadora[op] ?? "";
+            }
+
+            // Na UNION, as chamadas locais também recebem 55 + DDD (47 no exemplo).
+            if (op === "UNION" && (p[0] === "Fixo Local" || p[0] === "Celular Local")) {
+                baseRule[0] = "5547";
+            }
+
+            // UNION: serviços 0300/0500/0800/0900 recebem o prefixo 55.
+            if (op === "UNION" && p[0] === "Serviço 0300, 0500, 0800, 0900") {
+                baseRule[0] = "55";
+            }
+
+            // INTERIP: chamadas locais recebem o DDD 47.
+            if (op === "INTERIP" && (p[0] === "Fixo Local" || p[0] === "Celular Local")) {
+                baseRule[0] = "47";
+            }
+
+            // ALGAR: internacional remove 00 e inclui 0012.
+            if (op === "ALGAR" && p[0] === "Internacional") {
+                baseRule[0] = "0012";
+                baseRule[1] = "00";
+            }
+
+            return baseRule;
         });
+
+        const rowCount = showDialingRules ? Math.max(patternData.length, dialingRulesData.length) : patternData.length;
+        for (let index = 0; index < rowCount; index++) {
+            const p = patternData[index];
+            const rule = dialingRulesData[index];
+
+            let callTypeCell = '<td class="dialing-empty-cell"></td>';
+            let patternCell = '<td class="dialing-empty-cell"></td>';
+            let userCell = '<td class="dialing-empty-cell"></td>';
+
+            if (p) {
+                const usuarioDisca = (op === "ALGAR" && p[0] === "Internacional")
+                    ? "00554733216868"
+                    : (userDialExamples[p[0]] || p[2]);
+                callTypeCell = `<td><div class="dialing-value-box call-type">${p[0]}</div></td>`;
+                patternCell = `<td><div class="dialing-value-box">${p[1]}</div></td>`;
+                userCell = `<td><div class="dialing-value-box">${usuarioDisca}</div></td>`;
+            }
+
+            if (showDialingRules) {
+                const ruleCell = rule
+                    ? `<td class="dialing-rule-row-cell"><div class="dialing-rule-row-grid"><input class="rule-input" aria-label="Incluir" value="${rule[0]}"><input class="rule-input" aria-label="Remover" value="${rule[1]}"><input class="rule-input" aria-label="Padrão de Destino" value="${rule[2]}"></div></td>`
+                    : '<td class="dialing-empty-cell"></td>';
+                discagemHtml += `<tr>${callTypeCell}${patternCell}${userCell}${ruleCell}</tr>`;
+            } else if (p) {
+                discagemHtml += `<tr>${callTypeCell}${patternCell}${userCell}<td><div class="dialing-value-box">${p[2]}</div></td></tr>`;
+            }
+        }
         document.getElementById('discagem-table-body').innerHTML = discagemHtml;
 
         const sectionsMap = {
@@ -3123,6 +3966,38 @@ end
 
         if (document.querySelectorAll('.info-pass').length > 0 && document.querySelector('.info-pass').innerText === '-') generateNewPassword();
     }
+
+
+    function handleDialingRulesToggle(checkbox) {
+        // Alterna a quarta coluna entre Entrega Operadora e Regras de Discagem.
+        closeDialingRulesModal();
+        updateContent();
+    }
+
+    function openDialingRulesModal() {
+        const modal = document.getElementById('dialingRulesModalBackdrop');
+        if (!modal) return;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        const firstInput = modal.querySelector('.rule-input');
+        if (firstInput) setTimeout(() => firstInput.focus(), 50);
+    }
+
+    function closeDialingRulesModal() {
+        const modal = document.getElementById('dialingRulesModalBackdrop');
+        if (!modal) return;
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    function handleDialingRulesBackdropClick(event) {
+        if (event.target === event.currentTarget) closeDialingRulesModal();
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') closeDialingRulesModal();
+    });
+
     handleTypeChange();
     updateIpHighlight();
     updateDestinoOptions();
