@@ -1467,6 +1467,46 @@
             text-align: left;
         }
 
+        .observacoes-auth-box { position: relative; }
+
+        .observacoes-fun-popup {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 96px;
+            z-index: 20;
+            display: none;
+            min-height: 92px;
+            padding: 20px 48px 20px 20px;
+            background: var(--surface-raised);
+            color: var(--text);
+            border: 1px solid var(--warning);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        .observacoes-fun-popup.show { display: block; }
+
+        .observacoes-fun-popup-close {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            border: 0;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        body.theme-dark .observacoes-fun-popup {
+            background: #111827;
+            border-color: #f59e0b;
+        }
+
         .observacoes-auth-box h5 { margin: 0 0 6px; color: var(--primary-strong); font-weight: 800; }
         .observacoes-auth-box p { margin-bottom: 14px; color: var(--text-muted); font-size: 0.9rem; }
         .observacoes-auth-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
@@ -2698,6 +2738,10 @@
                 <div class="observacoes-auth-box">
                     <h5>🔒 Acesso às Observações</h5>
                     <p>Digite a senha para visualizar o conteúdo das Observações.</p>
+                    <div id="observacoesFunPopup" class="observacoes-fun-popup" role="alert">
+                        <button type="button" class="observacoes-fun-popup-close" onclick="closeObservacoesFunPopup()" aria-label="Fechar">✕</button>
+                        <span id="observacoesFunPopupText"></span>
+                    </div>
                     <label class="form-label fw-bold" for="observacoesSenha">Senha</label>
                     <input type="password" id="observacoesSenha" class="form-control" autocomplete="off" placeholder="Digite a senha">
                     <div id="observacoesAuthError" class="observacoes-auth-error" aria-live="polite"></div>
@@ -3424,15 +3468,51 @@ function handleTypeChange() {
         setTimeout(() => input.focus(), 0);
     }
 
+    function closeObservacoesFunPopup() {
+        const popup = document.getElementById('observacoesFunPopup');
+        if (popup) popup.classList.remove('show');
+        const input = document.getElementById('observacoesSenha');
+        if (input) input.focus();
+    }
+
     function confirmObservacoesAuth() {
         const input = document.getElementById('observacoesSenha');
         const error = document.getElementById('observacoesAuthError');
         if (input.value !== 'Wonit') {
-            error.textContent = 'Senha incorreta.';
+            const mensagens = [
+                '😏🔐 Quase! A senha olhou para você e disse: “tenta de novo!” 😄',
+                '🔐🗝️ Essa não abriu o cofre... vai, você consegue acertar! 💪😎',
+                '😂🚫 Senha errada! O SBC está fazendo jogo duro. Tente novamente! 🎯',
+                '🕵️‍♂️🔎 Ainda não! Ative o modo detetive e tente outra vez. 🔐😄',
+                '🎯😅 Passou perto... ou não! Tente acertar a senha. 🔑😉',
+                '🚫🔒 Acesso negado! O desafio continua: qual será a senha certa? 🤔🗝️',
+                '🤖🔐 O SBC disse: “essa senha não!” Bora para mais uma tentativa? 😜',
+                '👀🔑 Hmmm... não foi dessa vez! A senha certa ainda está escondida. 😄'
+            ];
+            const senhaDigitada = input.value.trim();
+            const senhaNormalizada = senhaDigitada.toLowerCase();
+
+            let mensagem;
+            if (senhaDigitada === 'wonit') {
+                mensagem = '😏🔐 Essa senha? Eu já sabia que você ia tentar usar “wonit”! Passou perto... mas ainda não foi dessa vez. Tente novamente! 🎯🗝️';
+            } else if (senhaDigitada === '31994') {
+                mensagem = '🤔🔢 31994? Poderia até ser essa senha... mas você errou! 😄 O desafio continua: tente novamente e veja se consegue acertar. 🔐🎯';
+            } else if (senhaNormalizada === 'clenilson') {
+                mensagem = '😂👀 Clenilson? Essa seria fácil demais! Você não achou que eu ia deixar a senha tão óbvia assim, né? 😎🔐 Tente novamente!';
+            } else {
+                mensagem = mensagens[Math.floor(Math.random() * mensagens.length)];
+            }
+
+            error.textContent = 'Senha incorreta. Tente novamente.';
+            const popup = document.getElementById('observacoesFunPopup');
+            const popupText = document.getElementById('observacoesFunPopupText');
+            popupText.textContent = mensagem;
+            popup.classList.add('show');
             input.select();
             return;
         }
         error.textContent = '';
+        closeObservacoesFunPopup();
         document.getElementById('observacoesAuthGate').style.display = 'none';
         document.getElementById('observacoesProtectedContent').hidden = false;
     }
