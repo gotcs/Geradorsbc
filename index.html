@@ -1524,6 +1524,84 @@
             color: #60a5fa;
         }
 
+        .sem-zero-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            outline: none;
+            color: #c026d3 !important;
+            font-weight: 950 !important;
+            text-shadow: 0 0 8px rgba(192, 38, 211, 0.26);
+            animation: semZeroAttention 1.8s ease-in-out infinite;
+        }
+
+        @keyframes semZeroAttention {
+            0%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 5px rgba(192, 38, 211, 0.20);
+            }
+            50% {
+                opacity: .72;
+                text-shadow: 0 0 11px rgba(192, 38, 211, 0.46);
+            }
+        }
+
+        body.theme-dark .sem-zero-tooltip {
+            color: #e879f9 !important;
+            text-shadow: 0 0 10px rgba(232, 121, 249, 0.40);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sem-zero-tooltip {
+                animation: none;
+            }
+        }
+
+        .sem-zero-tooltip-text {
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 10px);
+            z-index: 100;
+            width: max-content;
+            max-width: 290px;
+            padding: 9px 12px;
+            color: #ffffff;
+            background: #172033;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(15,23,42,.24);
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.35;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: normal;
+            white-space: normal;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translate(-50%, 4px);
+            transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+        }
+
+        .sem-zero-tooltip-text::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #172033;
+        }
+
+        .sem-zero-tooltip:hover .sem-zero-tooltip-text,
+        .sem-zero-tooltip:focus .sem-zero-tooltip-text,
+        .sem-zero-tooltip:focus-within .sem-zero-tooltip-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
         /* Padrão de Discagem - mesmo visual dos campos de Regras de Discagem */
         .dialing-main-card {
             padding: 14px;
@@ -2679,7 +2757,7 @@
                         <tr>
                             <th>Tipo de Chamada</th>
                             <th>Padrão</th>
-                            <th>Usuário Disca <span class="sem-zero-note">(Sem 0)</span></th>
+                            <th>Como Usuário Disca <span class="sem-zero-note sem-zero-tooltip" tabindex="0">(Sem 0)<span class="sem-zero-tooltip-text" role="tooltip">Usuário não deve discar 0 para fazer ligação de longa distância.</span></span></th>
                             <th>
                                 <span class="dialing-rules-header-wrap">
                                     <span class="dialing-rules-header-top">
