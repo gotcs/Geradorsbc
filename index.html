@@ -3758,7 +3758,10 @@ function handleTypeChange() {
     async function copyLuaBlock(blockId, button) {
         const source = document.getElementById(blockId);
         if (!source || !button) return;
-        const text = source.textContent.trim();
+        let text = source.textContent.trim();
+        if (blockId === 'lua-ldn' || blockId === 'lua-ldn-utech') {
+            text = text.split('\n').filter(line => line.trim() !== 'tabela_ldn = {}').join('\n').trim();
+        }
         if (!text) return;
         try {
             if (navigator.clipboard && window.isSecureContext) {
@@ -3777,7 +3780,7 @@ function handleTypeChange() {
 
     async function copyLuaClientLines() {
         const nome = (document.getElementById('nomeCliente').value || 'CLIENTE').toUpperCase();
-        const source = document.getElementById('lua-local');
+        const source = document.getElementById('lua-ldn');
         const button = document.getElementById('copyLuaClientBtn');
         if (!source || !button) return;
 
@@ -4033,7 +4036,7 @@ function handleTypeChange() {
                         const numA = data.details.numA.replace("DDR", ddrValue);
                         extraRows = `
                             <tr><th class="label-cell">Número de B</th><td>${data.details.numB || '-'}</td></tr>
-                            <tr><th class="label-cell">Número de A</th><td class="variable-display">${numA}${napCopyButton(numA)}</td></tr>
+                            <tr><th class="label-cell">Número de A</th><td class="variable-display">${numA}${['sbc1-4.1', 'sbc1-4.2', 'sbc2-4.1', 'sbc2-4.2'].includes(currentSelected) ? '' : napCopyButton(numA)}</td></tr>
                             <tr><th class="label-cell">NAP de Destino</th><td class="variable-display">${data.details.destino}</td></tr>
                             <tr><th class="label-cell">Alterar número de B</th><td>${data.details.altB || '-'} ${ (currentSelected === 'sbc1-4.4' || currentSelected === 'sbc2-4.3') ? '<span class="label-note">(223210 é Tech prefix da Operadora - Podendo ser diferente para cada cliente ou operadora)</span>' : '' }</td></tr>
                             <tr><th class="label-cell">Alterar número de A</th><td>${data.details.altA || '-'}</td></tr>
@@ -4087,8 +4090,7 @@ function handleTypeChange() {
             luaLocalStr += `${tableName} = {}
 --${nome}
 `;
-            luaLdnStr += `${dddIndex > 0 ? '\n' : ''}--DDD ${dddKey}
---${nome}
+            luaLdnStr += `${dddIndex > 0 ? '\n' : ''}--${nome}
 `;
 
             ddrsByDdd[dddKey].forEach(d => {
