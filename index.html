@@ -376,6 +376,108 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
         }
 
+        /* Um único retângulo geral contém a primeira linha e todas as novas linhas. */
+        .ddr-general-box {
+            width: 100%;
+            padding: 14px;
+            background: var(--surface-muted);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
+        }
+
+        .ddr-general-box > .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        /* Todas as linhas internas usam exatamente a mesma grade da primeira linha. */
+        .ddr-general-box > .ddr-row {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        #ddrRowsContainer {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #ddrRowsContainer .ddr-added-row {
+            width: 100%;
+            margin: 8px 0 0 0;
+            padding: 0;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        #ddrRowsContainer .ddr-added-row > [class*="col-md-"] {
+            min-width: 0;
+        }
+
+        #ddrRowsContainer .ddr-added-cell {
+            min-width: 0;
+        }
+
+        #ddrRowsContainer .ddr-added-cell > .form-control,
+        #ddrRowsContainer .ddr-added-cell > .form-select {
+            width: 100%;
+            min-height: 40px;
+            margin: 0;
+            padding: 8px 10px;
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
+        #ddrRowsContainer .ddr-added-cell > .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 32px;
+            cursor: pointer;
+            background-image: var(--bs-form-select-bg-img);
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+
+        #ddrRowsContainer .ddr-added-cell > .form-control:focus,
+        #ddrRowsContainer .ddr-added-cell > .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
+
+        #ddrRowsContainer .ddr-added-actions {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            min-height: 40px;
+        }
+
+        #ddrRowsContainer .ddr-added-actions .btn {
+            min-height: 40px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 900px) {
+            #ddrRowsContainer {
+                overflow-x: auto;
+            }
+
+            #ddrRowsContainer .ddr-added-row {
+                min-width: 860px;
+            }
+        }
+
         body.theme-dark .ddr-row {
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
         }
@@ -2984,6 +3086,7 @@ body.theme-dark .algar-delivery-tooltip {
             <button class="btn btn-sm btn-light" type="button" onclick="document.getElementById('navButtons').scrollIntoView({behavior: 'smooth', block: 'center'});">CONFIGURAÇÃO SCRIPT</button>
         </div>
         <div class="card-body" id="ddrContainer">
+            <div class="ddr-general-box">
             <!-- Linha DDR fixa: sempre visível -->
             <div class="row g-2 ddr-row ddr-entry-row align-items-end" id="ddr-row-fixo">
                 <div class="col-md-1">
@@ -2992,7 +3095,7 @@ body.theme-dark .algar-delivery-tooltip {
                 </div>
                 <div class="col-md-3">
                     <label class="form-label small fw-bold">Início da Faixa / Número</label>
-                    <input type="text" class="form-control form-control-sm ddr-start" placeholder="Ex: 35133707" oninput="updateDdrHighlight(); updateContent()">
+                    <input type="text" class="form-control form-control-sm ddr-start" placeholder="Ex: 35133707" oninput="syncDdrEnd(this); updateDdrHighlight(); updateContent()">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label small fw-bold">Fim da Faixa</label>
@@ -3018,8 +3121,10 @@ body.theme-dark .algar-delivery-tooltip {
                 </div>
             </div>
 
-            <!-- Linhas DDR adicionais injetadas aqui -->
-            <div id="ddrRowsContainer" class="mt-3"></div>
+            <!-- Linhas DDR adicionais ficam dentro do mesmo bloco visual da primeira linha -->
+            <div id="ddrRowsContainer"></div>
+
+            </div><!-- /ddr-general-box -->
 
             <!-- Linha 0800 fixa: sempre visível -->
             <div class="row g-2 ddr-row align-items-end mt-3" id="linha0800">
@@ -3652,55 +3757,101 @@ body.theme-dark .algar-delivery-tooltip {
     };
 
     function addDdrRow() {
-        ddrRowCount++;
+        // A nova linha é criada a partir da própria linha principal.
+        // Dessa forma, ela herda automaticamente todas as regras, classes,
+        // campos, opções e comportamentos da linha principal.
+        const primeiraLinha = document.getElementById('ddr-row-fixo');
         const container = document.getElementById('ddrRowsContainer');
-        const row = document.createElement('div');
-        row.className = 'row g-2 ddr-row ddr-entry-row align-items-end';
+
+        if (!primeiraLinha || !container) return;
+
+        ddrRowCount++;
+
+        const row = primeiraLinha.cloneNode(true);
         row.id = `ddr-row-${ddrRowCount}`;
-        row.innerHTML = `
-            <div class="col-md-1">
-                <label class="form-label small fw-bold">DDD</label>
-                <input type="text" class="form-control form-control-sm ddr-ddd" placeholder="Ex: 47" oninput="updateDdrHighlight(); updateContent()">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-bold">Início da Faixa / Número</label>
-                <input type="text" class="form-control form-control-sm ddr-start" placeholder="Ex: 35133707" oninput="updateDdrHighlight(); updateContent()">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-bold">Fim da Faixa</label>
-                <input type="text" class="form-control form-control-sm ddr-end" placeholder="Ex: 35133710" oninput="updateDdrHighlight(); updateContent()">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-bold">Destino da chamada (Entrada)</label>
-                <select class="form-select form-select-sm ddr-destino" onchange="updateContent()">
-                    <option value="S1-TRK-WONIT" data-s1-trunk="1">S1-TRK-WONIT</option>
-                    <option value="LGD-TRK-WONIT" data-lgd-trunk="1">LGD-TRK-WONIT</option>
-                    <option value="SBC-WONIT-CLOUD">SBC-WONIT-CLOUD</option>
-                    <option value="SBC-WONIT-NET-BR">SBC-WONIT-NET-BR</option>
-                    <option value="OP-UNION-TELECOM">OP-UNION-TELECOM</option>
-                    <option value="OP-SATI">OP-SATI</option>
-                    <option value="OP-INTERIP">OP-INTERIP</option>
-                    <option value="OP-ALGAR">OP-ALGAR</option>
-                    <option value="OP-UNIFIQUE">OP-UNIFIQUE</option>
-                    <option value="OP-GUPHUP">OP-GUPHUP</option>
-                </select>
-            </div>
-            <div class="col-md-2 text-end">
-                <button class="btn btn-sm btn-danger" type="button" onclick="removeDdrRow(${ddrRowCount})">Remover</button>
-            </div>
-        `;
+        row.className = 'row g-2 ddr-row ddr-entry-row ddr-added-row align-items-end';
+
+        // A nova linha começa vazia, mas mantém a configuração selecionada
+        // no campo Destino da linha principal.
+        const destinoPrincipal = primeiraLinha.querySelector('.ddr-destino')?.value || '';
+
+        const ddd = row.querySelector('.ddr-ddd');
+        const start = row.querySelector('.ddr-start');
+        const end = row.querySelector('.ddr-end');
+        const destino = row.querySelector('.ddr-destino');
+
+        if (ddd) {
+            ddd.value = '';
+            ddd.classList.remove('ddr-highlight');
+            ddd.setAttribute(
+                'oninput',
+                'updateDdrHighlight(); updateContent()'
+            );
+        }
+
+        if (start) {
+            start.value = '';
+            start.classList.remove('ddr-highlight');
+            // Mantém exatamente a regra da linha principal:
+            // Início da Faixa -> Fim da Faixa.
+            start.setAttribute(
+                'oninput',
+                'syncDdrEnd(this); updateDdrHighlight(); updateContent()'
+            );
+        }
+
+        if (end) {
+            end.value = '';
+            end.classList.remove('ddr-highlight');
+            end.setAttribute(
+                'oninput',
+                'updateDdrHighlight(); updateContent()'
+            );
+        }
+
+        if (destino) {
+            destino.value = destinoPrincipal;
+            destino.setAttribute('onchange', 'updateContent()');
+        }
+
+        // Remove os cabeçalhos da linha adicional, mas mantém os mesmos
+        // campos e a mesma estrutura/colunas da linha principal.
+        row.querySelectorAll('label').forEach(label => label.remove());
+
+        // A coluna de ações recebe somente "Remover".
+        const actions = row.querySelector('.col-md-2');
+        if (actions) {
+            actions.innerHTML = `
+                <div class="d-flex justify-content-end gap-2 flex-wrap">
+                    <button class="btn btn-sm btn-danger"
+                            type="button"
+                            onclick="removeDdrRow(${ddrRowCount})">Remover</button>
+                </div>
+            `;
+            actions.className = 'col-md-2 text-end ddr-added-actions';
+        }
+
         container.appendChild(row);
 
-        // Mantém a linha do 0800 sempre no final do bloco de DDRs
-        const ddrContainer = document.getElementById('ddrContainer');
-        const linha0800 = document.getElementById('linha0800');
-        if (ddrContainer && linha0800) ddrContainer.appendChild(linha0800);
-
+        updateDdrHighlight();
         updateContent();
         updateIpHighlight();
         updateDestinoOptions();
     }
 
+    function syncDdrEnd(startField) {
+        const row = startField?.closest('.ddr-entry-row');
+        if (!row) return;
+
+        const endField = row.querySelector('.ddr-end');
+        if (!endField) return;
+
+        // O Fim da Faixa acompanha automaticamente o Início da Faixa.
+        endField.value = startField.value;
+
+        // Mantém o campo de fim visualmente destacado como preenchimento automático.
+        endField.classList.add('ddr-highlight');
+    }
 
     function updateDdrHighlight() {
         document.querySelectorAll('.ddr-entry-row').forEach(row => {
@@ -3713,7 +3864,9 @@ body.theme-dark .algar-delivery-tooltip {
             [start, end].forEach(field => {
                 if (!field) return;
 
-                if (dddPreenchido && field.value.trim() === '') {
+                // A linha fixa continua usando o DDD para destacar campos obrigatórios.
+                // As linhas novas não possuem DDD e não recebem esse destaque por DDD.
+                if (ddd && dddPreenchido && field.value.trim() === '') {
                     field.classList.add('ddr-highlight');
                 } else {
                     field.classList.remove('ddr-highlight');
@@ -3729,6 +3882,7 @@ body.theme-dark .algar-delivery-tooltip {
         row.querySelector('.ddr-ddd').value = '';
         row.querySelector('.ddr-start').value = '';
         row.querySelector('.ddr-end').value = '';
+        row.querySelector('.ddr-end').classList.remove('ddr-highlight');
         const destino = row.querySelector('.ddr-destino');
         if (destino && destino.options.length) destino.selectedIndex = 0;
         updateDdrHighlight();
@@ -3993,6 +4147,10 @@ body.theme-dark .algar-delivery-tooltip {
         const lgdDynamic = `LGD-TRK-${nomeCliente}`;
 
         document.querySelectorAll('.ddr-destino, .route-destino').forEach(sel => {
+            // Preserva a opção atualmente selecionada para não alterar configurações
+            // já feitas na primeira linha ou nas demais linhas.
+            const selectedValue = sel.value;
+
             const existing = sel.querySelector('option[data-cliente-trunk="1"]');
             if (existing) existing.remove();
 
@@ -4014,7 +4172,12 @@ body.theme-dark .algar-delivery-tooltip {
                 opt.textContent = dynamicValue;
                 opt.setAttribute('data-cliente-trunk', '1');
                 sel.insertBefore(opt, sel.firstChild);
-                sel.value = dynamicValue;
+            }
+
+            // Restaura a seleção anterior. Se for uma linha nova sem seleção válida,
+            // mantém a primeira opção disponível.
+            if (selectedValue && Array.from(sel.options).some(opt => opt.value === selectedValue)) {
+                sel.value = selectedValue;
             }
         });
     }
@@ -4362,7 +4525,7 @@ function handleTypeChange() {
 
     async function copyLuaClientLines() {
         const nome = (document.getElementById('nomeCliente').value || 'CLIENTE').toUpperCase();
-        const source = document.getElementById('lua-ldn');
+        const source = document.getElementById('lua-local');
         const button = document.getElementById('copyLuaClientBtn');
         if (!source || !button) return;
 
