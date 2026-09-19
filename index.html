@@ -3197,6 +3197,100 @@ body.theme-dark .algar-delivery-tooltip {
                 font-size: .82rem !important;
             }
         }
+
+        /* Efeito de seleção ao passar o mouse — somente visual.
+           Mantém as cores originais do SBC INTERAGE+ e SBC .NET. */
+        .top-sbc-card {
+            border-top: 1px solid var(--border) !important;
+            transition: border-top-width .16s ease, box-shadow .16s ease, transform .16s ease;
+        }
+
+        .top-sbc-card:hover {
+            border-top: 4px solid #3b82f6 !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, .10);
+            transform: translateY(-1px);
+        }
+
+        .top-sbc-card.utech:hover {
+            border-top-color: #8b5cf6 !important;
+        }
+
+        /* PORTAS PADRÃO — destaque fixo somente no topo */
+        .portas-padrao-table,
+        .portas-padrao-wrap .sip-standard-card {
+            border-top: 3px solid #2563eb !important;
+            border-left: 1px solid var(--border) !important;
+            border-right: 1px solid var(--border) !important;
+        }
+
+        .portas-padrao-wrap .sip-standard-card {
+            border-left: 1px solid var(--border) !important;
+            border-right: 1px solid var(--border) !important;
+            border-bottom: 1px solid var(--border) !important;
+        }
+
+        /* Remove qualquer destaque lateral aplicado por hover/seleção */
+        .portas-padrao-table:hover,
+        .portas-padrao-wrap .sip-standard-card:hover {
+            border-left-color: var(--border) !important;
+            border-right-color: var(--border) !important;
+            transform: none;
+        }
+
+        /* SBCs — linha de seleção fixa no topo, sem linha lateral */
+        .top-sbc-card {
+            border-left: 1px solid var(--border) !important;
+            border-right: 1px solid var(--border) !important;
+            border-bottom: 1px solid var(--border) !important;
+            border-top: 4px solid #3b82f6 !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .08);
+            transform: none;
+            transition: border-top-width .15s ease, box-shadow .15s ease, transform .15s ease;
+        }
+
+        .top-sbc-card.utech {
+            border-left-color: var(--border) !important;
+            border-top-color: #8b5cf6 !important;
+        }
+
+        .top-sbc-card:hover {
+            border-left-color: var(--border) !important;
+            border-right-color: var(--border) !important;
+            border-bottom-color: var(--border) !important;
+            border-top-width: 5px !important;
+            box-shadow: 0 5px 14px rgba(15, 23, 42, .14);
+            transform: translateY(-1px);
+        }
+
+        .top-sbc-card.utech:hover {
+            border-left-color: var(--border) !important;
+            border-right-color: var(--border) !important;
+            border-bottom-color: var(--border) !important;
+            border-top-color: #8b5cf6 !important;
+        }
+
+        /* Caso alguma regra anterior aplique destaque lateral no hover, neutraliza. */
+        .top-sbc-card::before {
+            display: none !important;
+        }
+
+        /* Seleção visual completa ao passar o mouse */
+        .top-sbc-card {
+            transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+        }
+
+        .top-sbc-card:hover {
+            box-shadow:
+                0 0 0 2px rgba(59, 130, 246, .28),
+                0 5px 16px rgba(15, 23, 42, .14) !important;
+            transform: translateY(-1px);
+        }
+
+        .top-sbc-card.utech:hover {
+            box-shadow:
+                0 0 0 2px rgba(139, 92, 246, .28),
+                0 5px 16px rgba(15, 23, 42, .14) !important;
+        }
 </style>
 </head>
 <body>
