@@ -287,16 +287,19 @@
         .ip-info-container {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-            margin-bottom: 26px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .ip-card {
             position: relative;
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 18px 20px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 42px;
+            padding: 7px 12px;
             overflow: hidden;
             background: var(--surface-muted);
             border: 1px solid var(--border);
@@ -309,10 +312,10 @@
         .ip-card::after {
             content: "";
             position: absolute;
-            right: -24px;
-            bottom: -34px;
-            width: 116px;
-            height: 116px;
+            right: -18px;
+            bottom: -26px;
+            width: 78px;
+            height: 78px;
             border-radius: 50%;
             background: var(--primary-soft);
             opacity: 0.72;
@@ -332,9 +335,9 @@
         .ip-card-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             color: var(--primary);
-            font-size: 0.70rem;
+            font-size: 0.64rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -342,21 +345,22 @@
 
         .ip-card-body {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             align-items: baseline;
-            gap: 8px 12px;
+            justify-content: flex-end;
+            gap: 6px 9px;
         }
 
         .ip-card-address {
             color: var(--primary-strong);
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-            font-size: 1.1rem;
+            font-size: 0.88rem;
             font-weight: 800;
         }
 
         .ip-card-domain {
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 0.76rem;
             font-weight: 650;
         }
 
@@ -1366,6 +1370,10 @@
         }
 
         @media (max-width: 768px) {
+            .top-sbc-panel {
+                grid-template-columns: 1fr;
+            }
+
             .container-main {
                 width: min(100% - 20px, 720px);
                 margin-top: 12px;
@@ -2963,6 +2971,232 @@ body.theme-dark .algar-delivery-tooltip {
 
         .algar-local-row { color: #b45309 !important; font-weight: 600; }
         .algar-local-row td, .algar-local-row td * { color: #b45309 !important; }
+
+
+        /* Painel superior dos SBCs - dois retângulos independentes */
+        .top-sbc-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+            margin: 0 0 24px;
+        }
+
+        .top-sbc-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            min-height: 38px;
+            height: 38px;
+            padding: 5px 18px;
+            overflow: hidden;
+            background: linear-gradient(110deg, var(--surface-muted), var(--surface-raised));
+            border: 1px solid var(--border);
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .08);
+        }
+
+        .top-sbc-card.utech {
+            border-left-color: #8b5cf6;
+        }
+
+        .top-sbc-card::after {
+            content: "";
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, .08);
+            pointer-events: none;
+        }
+
+        .top-sbc-card.utech::after {
+            background: rgba(139, 92, 246, .08);
+        }
+
+        .top-sbc-title,
+        .top-sbc-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-sbc-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 0 auto;
+            color: #2563eb;
+            font-size: .78rem;
+            font-weight: 850;
+            letter-spacing: .015em;
+            white-space: nowrap;
+        }
+
+        .top-sbc-card.utech .top-sbc-title {
+            color: #7c3aed;
+        }
+
+        .top-sbc-title::before {
+            content: "🌐";
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 22px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, .10);
+            font-size: .72rem;
+        }
+
+        .top-sbc-card.utech .top-sbc-title::before {
+            background: rgba(139, 92, 246, .11);
+        }
+
+        .top-sbc-content {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            margin-left: 17px;
+            padding-left: 17px;
+            border-left: 1px solid var(--border);
+        }
+
+        .top-sbc-ip {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text);
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: .82rem;
+            font-weight: 800;
+            white-space: nowrap;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .top-sbc-ip::before {
+            content: "▤";
+            margin-right: 8px;
+            color: #64748b;
+            font-family: Arial, sans-serif;
+            font-size: .92rem;
+        }
+
+        .top-sbc-ip::after {
+            content: "|";
+            margin: 0 13px;
+            color: var(--border-strong);
+        }
+
+        .top-sbc-url {
+            display: inline-flex;
+            align-items: center;
+            min-width: 0;
+            color: #2563eb;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            font-size: .84rem;
+            font-weight: 800;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-sbc-card.utech .top-sbc-url {
+            color: #7c3aed;
+        }
+
+        .top-sbc-url::before {
+            content: "↗";
+            margin-right: 7px;
+            font-size: .95rem;
+            font-weight: 900;
+        }
+
+        .top-sbc-url:hover {
+            text-decoration: underline;
+        }
+
+        .top-sbc-open-note {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .top-sbc-panel {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-sbc-card {
+                padding: 5px 10px;
+            }
+
+            .top-sbc-content {
+                margin-left: 9px;
+                padding-left: 9px;
+            }
+
+            .top-sbc-ip::after {
+                margin: 0 7px;
+            }
+
+            .top-sbc-title {
+                font-size: .68rem;
+            }
+
+            .top-sbc-ip,
+            .top-sbc-url {
+                font-size: .75rem;
+            }
+        }
+
+
+        /* Destaque das informações dos SBCs — sem alterar a altura dos retângulos */
+        .top-sbc-title {
+            font-size: .92rem !important;
+            font-weight: 900 !important;
+            letter-spacing: .02em;
+        }
+
+        .top-sbc-ip {
+            font-size: .96rem !important;
+            font-weight: 900 !important;
+            color: var(--text) !important;
+        }
+
+        .top-sbc-url {
+            font-size: .96rem !important;
+            font-weight: 900 !important;
+        }
+
+        .top-sbc-ip::before,
+        .top-sbc-url::before {
+            font-weight: 900 !important;
+        }
+
+        .top-sbc-card.utech .top-sbc-title,
+        .top-sbc-card.utech .top-sbc-url {
+            font-weight: 900 !important;
+        }
+
+        @media (max-width: 600px) {
+            .top-sbc-title {
+                font-size: .78rem !important;
+            }
+
+            .top-sbc-ip,
+            .top-sbc-url {
+                font-size: .82rem !important;
+            }
+        }
 </style>
 </head>
 <body>
@@ -2982,6 +3216,29 @@ body.theme-dark .algar-delivery-tooltip {
         <h1 class="display-5 fw-bold text-primary">Gerador de Configuração SBC</h1>
         <p class="lead">Processo de criação das NAP's e Rotas dentro do SBC - SBC´s Wonit</p>
     </div>
+
+    <!-- Endereços dos SBCs: apresentação inicial -->
+    <section class="top-sbc-panel" aria-label="Endereços dos SBCs Wonit">
+        <article class="top-sbc-card">
+            <div class="top-sbc-title">
+                <span>SBC INTERAGE+</span>
+            </div>
+            <div class="top-sbc-content">
+                <span class="top-sbc-ip">143.0.121.185</span>
+                <a class="top-sbc-url" href="https://sbc.wonit.cloud" target="_blank" rel="noopener noreferrer" title="Abrir sbc.wonit.cloud em uma nova página">sbc.wonit.cloud</a>
+            </div>
+        </article>
+
+        <article class="top-sbc-card utech">
+            <div class="top-sbc-title">
+                <span>SBC .NET</span>
+            </div>
+            <div class="top-sbc-content">
+                <span class="top-sbc-ip">143.0.120.216</span>
+                <a class="top-sbc-url" href="https://sbc.wonit.net.br" target="_blank" rel="noopener noreferrer" title="Abrir sbc.wonit.net.br em uma nova página">sbc.wonit.net.br</a>
+            </div>
+        </article>
+    </section>
 
     <!-- Campos de Entrada do Cliente -->
     <div class="card mb-4 border-primary shadow-sm">
@@ -3170,7 +3427,7 @@ body.theme-dark .algar-delivery-tooltip {
                     </div>
                 </div>
                 <div class="ip-card ut">
-                    <div class="ip-card-header">🌐 SBC Utech </div>
+                    <div class="ip-card-header">🌐 SBC .NET </div>
                     <div class="ip-card-body">
                         <span class="ip-card-address">143.0.120.216</span>
                         <span class="ip-card-domain">sbc.wonit.net.br</span>
@@ -3219,7 +3476,7 @@ body.theme-dark .algar-delivery-tooltip {
                     </div>
                 </div>
                 <div class="ip-card ut">
-                    <div class="ip-card-header">🌐 SBC Utech </div>
+                    <div class="ip-card-header">🌐 SBC .NET </div>
                     <div class="ip-card-body">
                         <span class="ip-card-address">143.0.120.216</span>
                         <span class="ip-card-domain">sbc.wonit.net.br</span>
