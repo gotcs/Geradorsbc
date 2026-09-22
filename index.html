@@ -507,6 +507,18 @@
             box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.08), 0 12px 28px rgba(0, 0, 0, 0.32);
         }
 
+        #sbc2-cliente-var a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            cursor: pointer;
+        }
+
+        #sbc2-cliente-var a:hover {
+            text-decoration-style: solid;
+        }
+
         .variable-display {
             color: #c026d3 !important;
             font-weight: 800 !important;
@@ -3000,6 +3012,7 @@ body.theme-dark .algar-delivery-tooltip {
 
         .top-sbc-card.utech {
             border-left-color: #8b5cf6;
+            overflow: visible;
         }
 
         .top-sbc-card::after {
@@ -3091,6 +3104,99 @@ body.theme-dark .algar-delivery-tooltip {
             margin: 0 13px;
             color: var(--border-strong);
         }
+
+        .top-sbc-alert {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 17px;
+            height: 17px;
+            margin-left: 7px;
+            flex: 0 0 17px;
+            color: #7a4a00;
+            background: #facc15;
+            border: 1px solid #eab308;
+            border-radius: 50%;
+            font-family: Arial, sans-serif;
+            font-size: .68rem;
+            font-weight: 900;
+            line-height: 1;
+            cursor: help;
+            outline: none;
+        }
+
+        .top-sbc-alert:hover,
+        .top-sbc-alert:focus-visible {
+            background: #fde047;
+            box-shadow: 0 0 0 3px rgba(234, 179, 8, .18);
+        }
+
+        .top-sbc-alert-tooltip {
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 9px);
+            z-index: 20;
+            width: max-content;
+            max-width: 330px;
+            padding: 8px 11px;
+            color: #ffffff;
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .22);
+            font-family: var(--font-ui);
+            font-size: .74rem;
+            font-weight: 700;
+            line-height: 1.35;
+            text-align: left;
+            white-space: normal;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translate(-50%, 4px);
+            transition: opacity .16s ease, visibility .16s ease, transform .16s ease;
+        }
+
+        .top-sbc-alert-tooltip::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 8px;
+            height: 8px;
+            background: #1e293b;
+            border-right: 1px solid #475569;
+            border-bottom: 1px solid #475569;
+            transform: translate(-50%, -4px) rotate(45deg);
+        }
+
+        .top-sbc-alert:hover .top-sbc-alert-tooltip,
+        .top-sbc-alert:focus-visible .top-sbc-alert-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 600px) {
+            .top-sbc-alert-tooltip {
+                left: auto;
+                right: 0;
+                transform: translateY(4px);
+            }
+
+            .top-sbc-alert:hover .top-sbc-alert-tooltip,
+            .top-sbc-alert:focus-visible .top-sbc-alert-tooltip {
+                transform: translateY(0);
+            }
+
+            .top-sbc-alert-tooltip::after {
+                left: auto;
+                right: 5px;
+                transform: translateY(-4px) rotate(45deg);
+            }
+        }
+
 
         .top-sbc-url {
             display: inline-flex;
@@ -3328,7 +3434,7 @@ body.theme-dark .algar-delivery-tooltip {
                 <span>SBC .NET</span>
             </div>
             <div class="top-sbc-content">
-                <span class="top-sbc-ip">143.0.120.216</span>
+                <span class="top-sbc-ip">143.0.120.216<span class="top-sbc-alert" tabindex="0" aria-label="SBC .NET secundário">ⓘ<span class="top-sbc-alert-tooltip" role="tooltip">143.0.121.202 (Secundário) SBC.WONIT.NET.BR</span></span></span>
                 <a class="top-sbc-url" href="https://sbc.wonit.net.br" target="_blank" rel="noopener noreferrer" title="Abrir sbc.wonit.net.br em uma nova página">sbc.wonit.net.br</a>
             </div>
         </article>
@@ -4959,7 +5065,9 @@ function handleTypeChange() {
 
         document.getElementById('sbc1-op-name').innerText = op;
         document.getElementById('sbc2-op-name').innerText = op;
-        document.getElementById('sbc2-cliente-var').innerText = url;
+        const sbc2ClienteVar = document.getElementById('sbc2-cliente-var');
+        const clienteUrl = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+        sbc2ClienteVar.innerHTML = `<a href="${clienteUrl}" target="_blank" rel="noopener noreferrer" title="Abrir ${url}">${url}</a>`;
         document.getElementById('discagem-op-title').innerText = op;
         document.getElementById('script-name-backup').innerText = (tipo === 'S1' ? 'trk.lua' : 'trunk.lua');
 
