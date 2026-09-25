@@ -284,6 +284,83 @@
             color: #f8fafc;
         }
 
+        .gupshup-guide-link {
+            color: var(--primary-strong);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            transition: color 0.2s ease, text-decoration-style 0.2s ease;
+        }
+
+        .gupshup-guide-link:hover {
+            color: var(--primary);
+            text-decoration-style: solid;
+        }
+
+        body.theme-dark .gupshup-guide-link {
+            color: #93c5fd;
+        }
+
+        .gupshup-header-links {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+
+        .gupshup-logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 32px;
+            padding: 4px 8px;
+            background: var(--surface-raised);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gupshup-logo-link:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gupshup-logo-link img {
+            display: block;
+            width: auto;
+            max-width: 105px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .gupshup-status-button {
+            gap: 7px;
+            color: var(--primary-strong);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .gupshup-status-button span {
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .gupshup-status-button:hover {
+            color: var(--primary-strong);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .gupshup-header-links {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
         .ip-info-container {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3397,6 +3474,33 @@ body.theme-dark .algar-delivery-tooltip {
                 0 0 0 2px rgba(139, 92, 246, .28),
                 0 5px 16px rgba(15, 23, 42, .14) !important;
         }
+
+        .gupshup-embedded-wrap {
+            width: 100%;
+            margin-top: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: #ffffff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gupshup-embedded-frame {
+            display: block;
+            width: 100%;
+            min-height: 2400px;
+            height: 2400px;
+            border: 0;
+            background: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .gupshup-embedded-frame {
+                min-height: 3000px;
+                height: 3000px;
+            }
+        }
+
 </style>
 </head>
 <body>
@@ -3941,6 +4045,65 @@ body.theme-dark .algar-delivery-tooltip {
 
                 <div class="portas-padrao-note sip-standard-note">
                     <strong>Orientação:</strong> liberar as portas acima em <strong>Outbound</strong> para permitir comunicação entre o usuário e o SBC, contemplando acesso HTTPS, sinalização SIP/WebRTC e tráfego de mídia RTP/RTCP.
+                </div>
+            </div>
+        </div>
+
+        <!-- Gupshup -->
+        <div class="section-pane d-none" id="gupshup">
+            <div class="d-flex flex-column flex-md-row align-items-md-end gap-3 mt-3">
+                <h5 class="section-title flex-grow-1 mb-0">
+                    <span>GUPSHUP</span> —
+                    <a
+                        href="https://support.gupshup.io/hc/en-us/articles/62513779009689-Phone-number-onboarding-with-new-WhatsApp-account-model"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="gupshup-guide-link"
+                    >Cadastro de números de telefone com o novo modelo de conta do WhatsApp</a>
+
+                    <span class="gupshup-header-links">
+                        <a
+                            href="https://www.gupshup.ai/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="gupshup-logo-link"
+                            title="Gupshup"
+                        >
+                            <img
+                                src="https://gs-upload.gupshup.io/revamp/assets/v3/images/new-home-page/new-logo-gupshup.svg"
+                                alt="Gupshup Logo"
+                            >
+                        </a>
+
+                        <a
+                            href="https://status.gupshup.io/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="gupshup-logo-link gupshup-status-button"
+                            title="Gupshup IO Status"
+                        >
+                            <img
+                                src="https://cdn-us.statusiq.com/sp/api/public/statuspages/logo/NC-yLCBPu6G_8PifX5UHH4TORfJ41ZitLT9rEBR__4k=?default=1"
+                                alt="Logo de Gupshup IO Status"
+                            >
+                            <span>Gupshup IO Status</span>
+                        </a>
+                    </span>
+                </h5>
+            </div>
+            <div class="card shadow-sm mt-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">GUPSHUP</h5>
+                </div>
+                <div class="card-body p-2">
+                    <div class="gupshup-embedded-wrap">
+    <iframe
+        class="gupshup-embedded-frame"
+        title="Guia GUPSHUP - Atualização de preços das mensagens de serviço do WhatsApp"
+        src="gupshup.html"
+        loading="lazy">
+    </iframe>
+</div>
                 </div>
             </div>
         </div>
@@ -4836,9 +4999,10 @@ function handleTypeChange() {
             { id: 'script', label: 'CONFIGURAÇÃO SCRIPT' },
             { id: 'discagem', label: 'PADRÃO DISCAGEM' },
             { id: 'portasPadrao', label: 'PORTAS PADRÃO' },
+            { id: 'gupshup', label: 'GUPSHUP' },
             { id: 'observacoes', label: 'OBSERVAÇÕES' }
         ];
-        const order = ['sbc', 'script', 'discagem', 'portasPadrao', 'observacoes'];
+        const order = ['sbc', 'script', 'discagem', 'portasPadrao', 'gupshup', 'observacoes'];
         let html = "";
         order.forEach(id => {
             const btn = btns.find(b => b.id === id);
